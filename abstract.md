@@ -1,15 +1,15 @@
 # Elm
-## Functionnal programming for front end application
+## Functionnal Programming in Ruby
 
-Frontend programming is not your stuff ? Tired of having to debug callbacks and runtime exceptions ?
+Functional languages are becoming more and more popular. Elixir, Clojure, Elm, Scala are getting alot of traction.  Have you ever wondered why ?
 
-Elm might be a solution for these problems. In this talk, I will show you what makes Elm so special, from language features to its incredible development tool chain.
+In this talk, I will demistify some of the FP concepts such as function composition and partial application. I will show you some examples in Ruby that I hope will pique your curiosity make you want to learn more.
 
 
 # Elm
 
-## La programmation fonctionnelle pour les applications "front-end"
+## Programmation fonctionnelle en Ruby
 
-La programmation "front-end" n'est pas votre tasse de thé? Vous en avez marre de débugger des fonctions de callback et des exceptions de runtime ?
+Durant les dernières années nous entendons de plus en plus parlé de langages fonctionnels tels qu'Elixir, Clojure, Scala, Elm etc. Est-ce que vous vous demandez pourquoi?
 
-Elm pourrait être la solution ces problèmes. Durant cette présentation je vais vous démontrer quels sont les éléments qui font de Elm un language si spécial, allant de ces fonctionnalités de language fonctionnel en passant par un éventail d'outils de développent sans égal.
+Durant cette présentation je parlerai de certains concepts tels que la composition de fonction et de l'application patielle. Le tout sera fait en Ruby.
