@@ -5,7 +5,7 @@ La programmation fonctionnelle (PF) peut sembler rebutante au premier regard, po
 
 Durant cette présentation je vais vous parler de certains principes de PF permettant de renplacer certains pattern OO de façon plus modulaire, succinte et claire. Le tout sera fait en Ruby et ce àl'aide d'exemples simples. 
 
-# FP Concept In Ruby
+# FP Concepts In Ruby
 
 Functional programming may seem a bit scary at first sight, however some concepts are simpler than the ones that we are used to in Object Oriented languages.
 
