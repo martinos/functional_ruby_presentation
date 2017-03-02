@@ -1,15 +1,9 @@
-# Elm
-## Functionnal Programming in Ruby
+# Concepts de Programmation Fonctionnelle en Ruby
 
-Functional languages are becoming more and more popular. Elixir, Clojure, Elm, Scala are getting alot of traction. Have you ever wondered why ?
+La programmation fonctionnelle (PF) peut sembler complexe au premier regard, pourtant elle utilise souvent des concepts plus simples que ceux utilisÃ©s en programmation OrientÃ©e Objet.
+Durant cette prÃ©sentation je vais vous parler de certains principes de PF permettant de remplacer certains patterns OO de faÃ§on plus modulaire, succincte et claire. Le tout sera fait en Ruby et ce Ã  l'aide d'exemples simples.
 
-In this talk, I will demistify some powerful concepts such as function composition and partial application, all this in Ruby using simple examples.
+# Functional Programming Concepts In Ruby
 
-
-# Elm
-
-## Programmation fonctionnelle en Ruby
-
-Durant les dernières années nous entendons de plus en plus parlé de langages fonctionnels tels qu'Elixir, Clojure, Scala, Elm etc. Est-ce que vous vous demandez pourquoi?
-
-Durant cette présentation je parlerai de certains concepts puissants tels que la composition de fonction et de l'application partielle, le tout sera fait en Ruby.
+Functional programming may seem complex at first sight, however, some concepts are simpler than the ones that we are used to in Object Oriented languages.
+During this presentation, I will show you some FP concepts that makes code more modular, succinct and clear. The whole presentation will be done using Ruby.
