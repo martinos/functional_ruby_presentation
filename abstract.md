@@ -10,6 +10,6 @@ In this talk, I will demistify some of the FP concepts such as function composit
 
 ## Programmation fonctionnelle en Ruby
 
-Durant les derniÃ¨res annÃ©es nous entendons de plus en plus parlÃ© de langages fonctionnels tels qu'Elixir, Clojure, Scala, Elm etc. Est-ce que vous vous demandez pourquoi?
+Durant les dernières années nous entendons de plus en plus parlé de langages fonctionnels tels qu'Elixir, Clojure, Scala, Elm etc. Est-ce que vous vous demandez pourquoi?
 
-Durant cette prÃ©sentation je parlerai de certains concepts tels que la composition de fonction et de l'application patielle. Le tout sera fait en Ruby.
+Durant cette présentation je parlerai de certains concepts tels que la composition de fonction et de l'application partielle. Le tout sera fait en Ruby.
