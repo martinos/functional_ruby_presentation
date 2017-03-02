@@ -1,9 +1,9 @@
 # Elm
 ## Functionnal Programming in Ruby
 
-Functional languages are becoming more and more popular. Elixir, Clojure, Elm, Scala are getting alot of traction.  Have you ever wondered why ?
+Functional languages are becoming more and more popular. Elixir, Clojure, Elm, Scala are getting alot of traction. Have you ever wondered why ?
 
-In this talk, I will demistify some powerful concepts such as function composition and partial application all this in Ruby using simple examples.
+In this talk, I will demistify some powerful concepts such as function composition and partial application, all this in Ruby using simple examples.
 
 
 # Elm
