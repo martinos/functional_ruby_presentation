@@ -1,5 +1,5 @@
 title: Functional Ruby
-theme: select/cleaver-select-theme
+theme: martinos/reveal-cleaver-theme 
 output: slideshow.html
 
 --
@@ -37,24 +37,26 @@ output: slideshow.html
 --
 # Basics
 --
+In Ruby has great support of anonymous functions. We see them everywhere in the form of blocks.
+
 ### Blocks
 
 ```ruby
 ["apple", "orange", "banana"].map { |a| a.upcase }
 # => ["APPLE", "ORANGE", "BANANA"]
 ```
-
+---
 ### Procs
 
 ```ruby
 upcase = Proc.new { |a| a.upcase } #=> #<Proc:0x007fcc621aa078> 
-["apple", "orange", "banana"].map(&upcase)
-# => ["APPLE", "ORANGE", "BANANA"]
-```
-```ruby
+
 upcase.call("apple") #=> "APPLE"
 upcase.("apple") #=> "APPLE"
 upcase["apple"] #=> "APPLE"
+
+["apple", "orange", "banana"].map(&upcase)
+# => ["APPLE", "ORANGE", "BANANA"]
 ```
 ---
 
@@ -62,12 +64,13 @@ upcase["apple"] #=> "APPLE"
 
 ```ruby
 upcase = -> (a) { a.upcase } #=> #<Proc:0x008.. (lambda)>
-["apple", "orange", "banana"].map(&upcase)
-# => ["APPLE", "ORANGE", "BANANA"]
 
 upcase.call("apple") #=> "APPLE"
 upcase.("apple") #=> "APPLE"
 upcase["apple"] #=> "APPLE"
+
+["apple", "orange", "banana"].map(&upcase)
+# => ["APPLE", "ORANGE", "BANANA"]
 ```
 ---
 
@@ -172,8 +175,8 @@ class Linear
   end
 end
 
-fahrenheit = Linear.new(1.8, 32) 
-fahrenheit.call(10)
+to_fahrenheit = Linear.new(1.8, 32) 
+to_fahrenheit.call(10)
 ```
 ---
 
@@ -182,11 +185,11 @@ fahrenheit.call(10)
 ```ruby
 linear = -> m, b, x { m * x + b }.curry
 
-fahrenheit = linear.(1.8).(32)
-fahrenheit.(10) # => 50.0
+to_fahrenheit = linear.(1.8).(32)
+to_fahrenheit.(10) # => 50.0
 
-celcius = linear.(0.5555).(-7.777)
-celcius.(50) #=> 10.0
+to_celcius = linear.(0.5555).(-7.777)
+to_celcius.(50) #=> 10.0
 ```
 ---
 
@@ -196,7 +199,7 @@ celcius.(50) #=> 10.0
 
 ### Problem
 
-I want to know the number of languages used in a given Github account
+I want to know the repos main language count for given Github account
 
 ---
 
@@ -316,7 +319,7 @@ delete = -> pattern, str { str.gsub(pattern, "") }.curry
 
 # String -> String
 remove_a = delete.("a").after(lower)
-remove_a.("NOA")
+remove_a.("NOA") # => "no"
 ```
 
 ---
@@ -374,7 +377,7 @@ remove_a = delete.("a").after(lower)
 ```ruby
 users = User.all
 zip_codes = users.map { |a| a.id }
-                 .map { |id| Address.find_by(id: user_id} }
+                 .map { |user_id| Address.find_by(id: user_id} }
                  .map { |addr| addr.zip_code } 
 ```
 ---
@@ -393,8 +396,8 @@ get = -> a, method { a.send(:method) }
 
 ```ruby
 # User -> String
-zip_code_from_user = get.(:id) >> 
-                     find_in.(Address).(:id) >>
+zip_code_from_user = get.(:id) >>~
+                     find_in.(Address).(:id) >>~
                      get.(:zip_code)
 repo_names = map.(zip_code_from_user).(User.all)
 ```

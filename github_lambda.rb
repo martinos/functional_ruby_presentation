@@ -19,11 +19,11 @@ fetch_repo = -> user_name {
   open("https://api.github.com/users/#{user_name}/repos?per_page=100").read 
 }
 
-# string -> string
+# String -> String
 safe_fetch_repo = 
   fetch_repo >>+ retry_fn >>+ cache.("coucou.json") >>+ time.("fetching repo")
 
-# String -> Has String Int
+# String -> Hash String Int
 language_count =
   safe_fetch_repo >>~
   parse_json >>~ 
@@ -33,7 +33,7 @@ language_count =
 
 puts language_count.("Martinos").inspect
 
-# >> reading from cache
-# >> {"VIML"=>3, "COFFEESCRIPT"=>1, "ELIXIR"=>13, "RUBY"=>42, "SHELL"=>4, "JAVASCRIPT"=>3, "ELM"=>8, "HTML"=>6, "VIM SCRIPT"=>1, "N/A"=>5, "GO"=>2, "C"=>1, "CSS"=>1}
+# >> I, [2017-03-02T16:33:14.029258 #55205]  INFO -- : Time duration for fetching repo =  0.601699
+# >> ok{"VIML"=>3, "COFFEESCRIPT"=>1, "ELIXIR"=>13, "RUBY"=>42, "SHELL"=>4, "JAVASCRIPT"=>3, "ELM"=>8, "HTML"=>6, "VIM SCRIPT"=>1, "N/A"=>5, "GO"=>2, "C"=>1, "CSS"=>1}
 
 

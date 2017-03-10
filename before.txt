@@ -1,0 +1,1 @@
+#<Proc:0x007fac1996d4e0@rack_and_roll.rb:9 (lambda)>

@@ -1,30 +1,21 @@
 require 'active_support'
 require 'json'
 require 'pp'
+require './operators'
 
 $stdout.sync = true
-
-require 'superators19'
-class Object
-  superator ">>~" do |fn|
-    -> a { fn.(self.(a)) }
-  end
-
-  superator ">>+" do |fn|
-    fn.(self)
-  end
-end
 
 module Utils
   mattr_accessor :parse_json, :debug, :get, :retry_fn, 
     :record, :player, :count_by, :cache, :red, :time, 
-    :expired, :apply, :and_then, :default
+    :expired, :apply, :and_then, :default, :map, :get, :try
 
   @@parse_json = JSON.method(:parse)
   @@debug = -> print, a, b { print.(a) ; print.(b.to_s); b }.curry
   @@get = -> key, hash { hash[key] }.curry
   @@red = -> a { "\033[31m#{a}\033[0m" }
   # ( a -> b ) -> a -> b
+  @@try = -> f, a { a.nil? ?  nil : f.(a) }.curry
   @@retry_fn = -> fn, a {
     begin
       fn.(a)
@@ -67,6 +58,8 @@ module Utils
   @@apply = -> method, a { a.send(method) }.curry
   @@default = -> default, a { a.nil? ? default : a }.curry
   @@and_then = -> f , a { a.nil? ? nil : f.(a) }.curry
+  @@map = -> f, enum { enum.map(&f) }.curry
+  @@get = -> key, hash { hash[key] }.curry
 end
 
 
