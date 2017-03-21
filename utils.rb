@@ -2,17 +2,19 @@ require 'active_support'
 require 'json'
 require 'pp'
 require './operators'
+require 'pry-nav'
+require 'yaml'
 
 $stdout.sync = true
 
 module Utils
-  mattr_accessor :parse_json, :debug, :get, :retry_fn, 
+  mattr_accessor :parse_json, :debug, :at, :retry_fn, 
     :record, :player, :count_by, :cache, :red, :time, 
     :expired, :apply, :and_then, :default, :map, :get, :try
 
   @@parse_json = JSON.method(:parse)
   @@debug = -> print, a, b { print.(a) ; print.(b.to_s); b }.curry
-  @@get = -> key, hash { hash[key] }.curry
+  @@at = -> key, hash { hash[key] }.curry
   @@red = -> a { "\033[31m#{a}\033[0m" }
   # ( a -> b ) -> a -> b
   @@try = -> f, a { a.nil? ?  nil : f.(a) }.curry
@@ -25,11 +27,12 @@ module Utils
       @@retry_fn.(fn).(a)
     end
   }.curry
-  @@record = -> filename, result {
-    File.open(filename, "w+") { |a| a << result }
-    result
+  @@record = -> filename, to_save {
+    binding.pry
+    File.open(filename, "w+") { |a| a << to_save.to_yaml }
+    to_save
   }.curry
-  @@play = -> filename, _params { File.read(filename) }.curry
+  @@play = -> filename, _params { YAML.load(File.read(filename)) }.curry
   # (Float -> String -> Bool) -> String -> (a -> b) -> b
   @@cache  = -> expired, filename, fn, param {
     if expired.(filename) 
@@ -39,7 +42,6 @@ module Utils
       @@play.(filename).(nil)
     end
   }.curry
-  @@expired = -> sec, a { ! File.exist?(a)  || (Time.now - File.mtime(a)) > sec  }.curry
   @@count_by = -> fn, a { 
     a.inject({}) do |res, a| 
       by = fn.(a)
@@ -59,7 +61,8 @@ module Utils
   @@default = -> default, a { a.nil? ? default : a }.curry
   @@and_then = -> f , a { a.nil? ? nil : f.(a) }.curry
   @@map = -> f, enum { enum.map(&f) }.curry
-  @@get = -> key, hash { hash[key] }.curry
+  @@at = -> key, hash { pp hash; hash[key] }.curry
+  @@get = -> method, obj { obj.send(method) }.curry
 end
 
 

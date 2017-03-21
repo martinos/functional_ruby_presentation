@@ -1,45 +1,32 @@
 title: Functional Ruby
-theme: martinos/reveal-cleaver-theme 
+theme: martinos/reveal-cleaver-theme
 output: slideshow.html
 
 --
 # Functional Ruby
 --
-# In Ruby 
+## In Ruby Everything Is
 --
-# Everything Is
+## An Object
 --
-# An Object
+## Methods, Procs, Lambdas Are
 --
-# Methods, Procs, Lambdas ...
--- 
-# Are
+## Objects
 --
-# Objects
+## In Pure FP languages (Haskell, Elm...), Everything Is
 --
-# In Pure FP languages (Haskell, Elm...)
+## A Function
 --
-# Everything Is 
+## Numbers, Strings, Structures Are
 --
-# A Function 
+## Functions
 --
-# Numbers, Strings, Structures...
---
-# Are
---
-# Functions
---
-# Let's Expore The FP
---
-![](images/Back_side_of_the_Moon_AS16-3021.jpg)
---
-# Of Ruby
+## Let's Explore The Functional Side Ruby
 --
 # Basics
 --
-In Ruby has great support of anonymous functions. We see them everywhere in the form of blocks.
+Ruby has great support for anonymous functions. We see them everywhere in the form of blocks.
 
-### Blocks
 
 ```ruby
 ["apple", "orange", "banana"].map { |a| a.upcase }
@@ -49,7 +36,7 @@ In Ruby has great support of anonymous functions. We see them everywhere in the 
 ### Procs
 
 ```ruby
-upcase = Proc.new { |a| a.upcase } #=> #<Proc:0x007fcc621aa078> 
+upcase = Proc.new { |a| a.upcase } #=> #<Proc:0x007fcc621aa078>
 
 upcase.call("apple") #=> "APPLE"
 upcase.("apple") #=> "APPLE"
@@ -91,12 +78,13 @@ Partial application refers to the process of fixing a number of arguments to a f
 
 ---
 
-### Example with Arity 2 
+### Example with Arity 2
 
 ```ruby
 add = -> a { -> b { a + b } }
-add2 =  add.(2) # => -> b { 2 + b }
+add2 = add.(2) # => -> b { 2 + b }
 add2.(3)  # => 5
+add.(2).(3)  # => 5
 ```
 ---
 
@@ -105,35 +93,41 @@ add2.(3)  # => 5
 ```ruby
 multi_add = -> a { -> b { -> c { a + b + c } } }
 add_10 = multi_add.(10) # => -> b { -> c { 10 + b + c } }
-add_10_and_1 = add_10.(1) # => -> c { 10 + 1 + c } 
+add_10_and_1 = add_10.(1) # => -> c { 10 + 1 + c }
 add_10_and_1.(5) # => 16
 
 add.(10).(1).(5) # => 16
 ```
 ---
 
-Defining your lambda this way can be teadious. Ruby offers a solution for that.
+Defining your curried lambda this way can be tedious. Ruby offers a solution for that.
 
 Anyone ?
 
 ----
 
-### Proc#curry 
+### Proc#curry
 
-```
+```ruby
 add =  -> (a, b) { a + b }.curry
-add2 =  add.(2)
+add2 = add.(2)
 add2.(3) # => 5
 ```
 
 ---
 
-# Why Would I Use This ???
+## Why Would I Use This ???
 
 ---
+
 ### Initializing Functions
 
-Example
+---
+
+### Example 1 
+#### Linear Function
+
+---
 
 _y = m * x + b_
 
@@ -154,7 +148,7 @@ end
 ```ruby
 class INeedAClassNameForThis
   def self.fahrenheit(celcius)
-    MyMath.linear(1.8, celcius, 32) 
+    MyMath.linear(1.8, celcius, 32)
   end
 end
 
@@ -175,7 +169,7 @@ class Linear
   end
 end
 
-to_fahrenheit = Linear.new(1.8, 32) 
+to_fahrenheit = Linear.new(1.8, 32)
 to_fahrenheit.call(10)
 ```
 ---
@@ -193,13 +187,114 @@ to_celcius.(50) #=> 10.0
 ```
 ---
 
-### Partial Application For Managing Dependency Injection 
+### Example 2 
+#### Poor's man Strong Parameters
 
 ---
 
-### Problem
+```ruby
+params = {name: "Joe", age: "23", pwd: "hacked_password"}
+```
 
-I want to know the repos main language count for given Github account
+```ruby
+filter_hash.([:name, :age]).(params)
+# => {name: "Joe", age: "23"}
+```
+
+```ruby
+filter_hash = -> keys, params {
+  Hash[keys.map { |key| [key, param[key]] }]
+}.curry
+```
+
+----
+
+```ruby
+params = {name: "Joe", age: "23", pwd: "hacked_password",
+          contact: { address: "2342 St-Denis",
+                     to_filter: ""}}
+```
+
+```
+filter_hash.([:name, :age, :contact]).(params)
+
+hash_of.(name: -> a {a}, 
+         age: -> a {a}, 
+         contact: hash_of.(address: -> a {a})).(params)
+```
+---
+
+```ruby
+filter_hash = -> keys, hash {
+  Hash[keys.map { |key| [key, hash[key]] }]
+}.curry
+```
+
+---
+
+```ruby
+hash_of = -> fields, hash { 
+  Hash[fields.map { |(key, fn)| [key, fn.(hash[key])] }] 
+}.curry
+```
+---
+
+#### The Identity Function
+
+```ruby
+same = -> a { a }
+same.(2) # => 2
+```
+
+---
+
+```ruby
+hash_of.(name: -> a {a}, 
+         age: -> a {a}, 
+         contact: hash_of.(address: -> a {a}))
+```
+
+---
+
+```ruby
+hash_of.(name: same, 
+         age: same, 
+         contact: hash_of.(address: same))
+```
+
+---
+
+```ruby
+contact = hash_of.(address: same)
+user = hash_of.(name: same, age: same,
+                contact: hash_of.(contact))
+```
+
+---
+```ruby
+array_of = -> fn, value {
+  if value.kind_of?(Array)
+    value.map(&fn)
+  else
+   []
+}.curry
+
+default = -> default, a { a.nil? ? default : a  }.curry
+to_int = => a { a.to_i }
+```
+---
+```ruby
+contact = hash_of.(address: default.("N/A")) 
+params = [{address: "21 Jump Street", remove: "me" }, 
+          {}]
+array_of.(contact).(params)
+# => [{address: "21 Jump Street"}, 
+#     {address: "N/A"}]
+```
+---
+
+
+### Partial Application For Managing Dependency Injection
 
 ---
 
@@ -212,12 +307,10 @@ class GithubRepoLanguageCounter
     @client = github_client
   end
 
-  def call(user_name)
-    repos = @client.repos(user_name)
+  def call(account_name)
+    repos = @client.repos(account_name)
     @logger.info("REPOS = \n #{repos}")
-    repos.group_by { |a| a["language"] }
-         .map { |key, val| [key, val.count] }
-         .to_h
+    # Do some stuff with the repos
   end
 end
 ```
@@ -225,8 +318,8 @@ end
 
 ```ruby
 class GithubClient
-  def repos(user_name)
-    json = open("https://api.github.com/users/#{user_name}/repos?per_page=100").read
+  def repos(account_name)
+    json = open("https://api.github.com/users/#{account_name}/repos?per_page=100").read
     JSON.parse(json)
   end
 end
@@ -242,26 +335,24 @@ puts counter.call("martinos")
 ### The Functional Way
 
 ```ruby
-language_count = -> print, fetch_repo, user_name {
-  repos = fetch_repo.(user_name)
+language_count = -> print, fetch_repo, account_name {
+  repos = fetch_repo.(account_name)
   print.("REPOS = \n  #{repos}")
-  repos.group_by { |a| a["language"] }
-       .map { |key, val| [key, val.count] }
-       .to_h
+  # do some stuff with the repos
 }.curry
 ```
 ---
 ```ruby
-fetch_repo = -> user_name { 
-  json = open("https://api.github.com/users/#{user_name}/repos?per_page=100").read 
+fetch_repo = -> account_name {
+  json = open("https://api.github.com/users/#{account_name}/repos?per_page=100").read
   JSON.parse(json)
 }
 
-printer = $stdout.method(:puts)
-get_names = language_count.(printer).(fetch_repo)
+printer = -> a { puts a }
+my_counter = language_count.(printer).(fetch_repo)
 
 # Somewhere else in the code
-get_names.("martinosis")
+my_counter.("martinosis")
 ```
 ---
 ```ruby
@@ -272,141 +363,69 @@ printer = -> a { logger.info(a) }
 ---
 # Function Composition
 ---
-### The Math
 
-```
-f : a -> b
-g : b -> c
-h : c -> d
-
-u(x) = g(f(x))
-u = g * f
-
-v(x) = h(u(x))
-v(x) = h(g(f(x)))
-v = h * (g * f)
-
-w(x) = h(g(x))
-w = h * g
-
-v(x) = w(f(x))
-v(x) = (h * g) * h
-```
----
-## Function Composition Is Associative
----
-
-### Creating Composition Function
+In programming it's very frequent to do a calculation, take the result and pass it to another method or a function.
 
 ```ruby
-class Proc
-  def after(fn)
-    -> a { self.(fn.(a)) }
-  end
+def user_is_major(email)
+  user = User.find_by(email: email)
+  age = Time.now - user.birthdate
+  age >= 18.years
 end
 ```
-
 ---
-
-### Example
-
 ```ruby
-# String -> String
-lower = -> a { a.downcase }
+user_from_email = -> e { User.find_by(email: e) }
+user_age = -> user { Time.now - user.birthdate }
+is_major = -> age { age >= 18.years }
 
-# Pattern -> String -> String
-delete = -> pattern, str { str.gsub(pattern, "") }.curry
+is_user_major = -> email { 
+  is_major.(user_age.(user_from_email.(email)))
+}.curry
 
-# String -> String
-remove_a = delete.("a").after(lower)
-remove_a.("NOA") # => "no"
+is_user_major.("joebloe@acme.com")
 ```
 
 ---
 
-### The >>~ operator
+#### Function Composition Is Associative
 
-In Elm and F# there is the `>>` operator, which combines functions in the reverse order.
+---
+
+#### The >>~ operator
+
+Also know as `>>` in F# and Elm 
 
 ```ruby
 require 'superators19'
 
-class Object
+class Proc
   superator ">>~" do |fn|
     fn.(self)
   end
 end
 ```
 ---
+
 ### Function Composition decouples code
 
-```
-def upcase(string)
-  string.upcase
-end
-
-def reverse(string)
-  string.reverse
-end
-
-def upcase_and_reverse(string)
-  a = upcase(string)
-  reverse(a)
-end
-```
----
-
-### Example
-
 ```ruby
-# String -> String
-remove_a = lower >>~ delete.("a")
-```
+is_user_major = -> email { is_major.(user_age.(user_from_email.(email)))}
 
-Is equivalent to
-
-```ruby
-# String -> String
-remove_a = delete.("a").after(lower)
+is_user_major = user_from_email >>~ user_age >>~ is_major
+is_user_major.("joebloe@acme.com")
 ```
 
 ---
-
-### Example (The OO Way) 
-
-```ruby
-users = User.all
-zip_codes = users.map { |a| a.id }
-                 .map { |user_id| Address.find_by(id: user_id} }
-                 .map { |addr| addr.zip_code } 
-```
----
-### The FP Way 
-
-```ruby
-# (a -> b) -> List a -> List b
-map = -> fn, a { a.map(&:fn) }
-
-# Model -> Symbol -> a
-find_in = -> model, attr, value { model.find_by(attr => value) }
-
-# a -> b -> c
-get = -> a, method { a.send(:method) }
-```
-
-```ruby
-# User -> String
-zip_code_from_user = get.(:id) >>~
-                     find_in.(Address).(:id) >>~
-                     get.(:zip_code)
-repo_names = map.(zip_code_from_user).(User.all)
-```
+![alt text](images/composition.png "Logo Title Text 1")
 ---
 
-# The Christmas Tree Operator (>>+)
+
+## The Christmas Tree Operator (>>+)
+
 ---
 
-# Mostly Known As The Pipe Operator (|>)
+## Mostly Known As The Pipe Operator (|>)
 
 ---
 
@@ -420,6 +439,8 @@ class Object
 end
 ```
 
+---
+
 It applies the left and side value to the last parameter of the right side.
 
 ---
@@ -430,9 +451,13 @@ It applies the left and side value to the last parameter of the right side.
 upcase = -> a { a.upcase }
 reverse = -> a { a.reverse }
 
-"this is a test" >>+ upcase >>+ reverse 
+"this is a test" >>+ upcase >>+ reverse
 # => "TSET A SI SIHT"
+
+reverse.(upcase.("this is a test"))
 ```
+---
+### This pipe operator is not associative
 ---
 
 ### Conclusion
@@ -441,11 +466,11 @@ reverse = -> a { a.reverse }
 
 ### References
 
-#### Learning 
+#### Learning
 
-```
+```ruby
 ```
 
 #### Talks
 
-```
+```ruby

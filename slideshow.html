@@ -1780,63 +1780,39 @@ based on dark.css by Ivan Sagalaev
 
   </section>
   <section>
-    <h1 id="in-ruby">In Ruby</h1>
+    <h2 id="in-ruby-everything-is">In Ruby Everything Is</h2>
 
   </section>
   <section>
-    <h1 id="everything-is">Everything Is</h1>
+    <h2 id="an-object">An Object</h2>
 
   </section>
   <section>
-    <h1 id="an-object">An Object</h1>
+    <h2 id="methods-procs-lambdas-are">Methods, Procs, Lambdas Are</h2>
 
   </section>
   <section>
-    <h1 id="methods-procs-lambdas-">Methods, Procs, Lambdas ...</h1>
+    <h2 id="objects">Objects</h2>
 
   </section>
   <section>
-    <h1 id="are">Are</h1>
+    <h2 id="in-pure-fp-languages-haskell-elm-everything-is">In Pure FP languages (Haskell, Elm...), Everything Is</h2>
 
   </section>
   <section>
-    <h1 id="objects">Objects</h1>
+    <h2 id="a-function">A Function</h2>
 
   </section>
   <section>
-    <h1 id="in-pure-fp-languages-haskell-elm-">In Pure FP languages (Haskell, Elm...)</h1>
+    <h2 id="numbers-strings-structures-are">Numbers, Strings, Structures Are</h2>
 
   </section>
   <section>
-    <h1 id="everything-is">Everything Is</h1>
+    <h2 id="functions">Functions</h2>
 
   </section>
   <section>
-    <h1 id="a-function">A Function</h1>
-
-  </section>
-  <section>
-    <h1 id="numbers-strings-structures-">Numbers, Strings, Structures...</h1>
-
-  </section>
-  <section>
-    <h1 id="are">Are</h1>
-
-  </section>
-  <section>
-    <h1 id="functions">Functions</h1>
-
-  </section>
-  <section>
-    <h1 id="let-s-expore-the-fp">Let&#39;s Expore The FP</h1>
-
-  </section>
-  <section>
-    <p><img src="images/Back_side_of_the_Moon_AS16-3021.jpg" alt=""></p>
-
-  </section>
-  <section>
-    <h1 id="of-ruby">Of Ruby</h1>
+    <h2 id="let-s-explore-the-functional-side-ruby">Let&#39;s Explore The Functional Side Ruby</h2>
 
   </section>
   <section>
@@ -1844,15 +1820,14 @@ based on dark.css by Ivan Sagalaev
 
   </section>
   <section>
-    <p>In Ruby has great support of anonymous functions. We see them everywhere in the form of blocks.</p>
-<h3 id="blocks">Blocks</h3>
+    <p>Ruby has great support for anonymous functions. We see them everywhere in the form of blocks.</p>
 <pre><code class="lang-ruby">[<span class="hljs-string">"apple"</span>, <span class="hljs-string">"orange"</span>, <span class="hljs-string">"banana"</span>].map { |a| a.upcase }
 <span class="hljs-comment"># =&gt; ["APPLE", "ORANGE", "BANANA"]</span></code></pre>
 
   </section>
   <section>
     <h3 id="procs">Procs</h3>
-<pre><code class="lang-ruby">upcase = Proc.new { |a| a.upcase } <span class="hljs-comment">#=&gt; #&lt;Proc:0x007fcc621aa078&gt; </span>
+<pre><code class="lang-ruby">upcase = Proc.new { |a| a.upcase } <span class="hljs-comment">#=&gt; #&lt;Proc:0x007fcc621aa078&gt;</span>
 
 upcase.call(<span class="hljs-string">"apple"</span>) <span class="hljs-comment">#=&gt; "APPLE"</span>
 upcase.(<span class="hljs-string">"apple"</span>) <span class="hljs-comment">#=&gt; "APPLE"</span>
@@ -1890,40 +1865,48 @@ shout_at.(<span class="hljs-string">"martin"</span>) <span class="hljs-comment">
   <section>
     <h3 id="example-with-arity-2">Example with Arity 2</h3>
 <pre><code class="lang-ruby">add = -&gt; a { -&gt; b { a + b } }
-add2 =  add.(<span class="hljs-number">2</span>) <span class="hljs-comment"># =&gt; -&gt; b { 2 + b }</span>
-add2.(<span class="hljs-number">3</span>)  <span class="hljs-comment"># =&gt; 5</span></code></pre>
+add2 = add.(<span class="hljs-number">2</span>) <span class="hljs-comment"># =&gt; -&gt; b { 2 + b }</span>
+add2.(<span class="hljs-number">3</span>)  <span class="hljs-comment"># =&gt; 5</span>
+add.(<span class="hljs-number">2</span>).(<span class="hljs-number">3</span>)  <span class="hljs-comment"># =&gt; 5</span></code></pre>
 
   </section>
   <section>
     <h3 id="example-of-arity-3">Example of Arity 3</h3>
 <pre><code class="lang-ruby">multi_add = -&gt; a { -&gt; b { -&gt; c { a + b + c } } }
 add_1<span class="hljs-number">0</span> = multi_add.(<span class="hljs-number">10</span>) <span class="hljs-comment"># =&gt; -&gt; b { -&gt; c { 10 + b + c } }</span>
-add_10_and_1 = add_1<span class="hljs-number">0</span>.(<span class="hljs-number">1</span>) <span class="hljs-comment"># =&gt; -&gt; c { 10 + 1 + c } </span>
+add_10_and_1 = add_1<span class="hljs-number">0</span>.(<span class="hljs-number">1</span>) <span class="hljs-comment"># =&gt; -&gt; c { 10 + 1 + c }</span>
 add_10_and_1.(<span class="hljs-number">5</span>) <span class="hljs-comment"># =&gt; 16</span>
 
 add.(<span class="hljs-number">10</span>).(<span class="hljs-number">1</span>).(<span class="hljs-number">5</span>) <span class="hljs-comment"># =&gt; 16</span></code></pre>
 
   </section>
   <section>
-    <p>Defining your lambda this way can be teadious. Ruby offers a solution for that.</p>
+    <p>Defining your curried lambda this way can be tedious. Ruby offers a solution for that.</p>
 <p>Anyone ?</p>
 
   </section>
   <section>
     <h3 id="proc-curry">Proc#curry</h3>
-<pre><code>add =  -&gt; (a, b) { a + b }.curry
-add2 =  add.(2)
-add2.(3) # =&gt; 5</code></pre>
+<pre><code class="lang-ruby">add =  -&gt; (a, b) { a + b }.curry
+add2 = add.(<span class="hljs-number">2</span>)
+add2.(<span class="hljs-number">3</span>) <span class="hljs-comment"># =&gt; 5</span></code></pre>
 
   </section>
   <section>
-    <h1 id="why-would-i-use-this-">Why Would I Use This ???</h1>
+    <h2 id="why-would-i-use-this-">Why Would I Use This ???</h2>
 
   </section>
   <section>
     <h3 id="initializing-functions">Initializing Functions</h3>
-<p>Example</p>
-<p><em>y = m * x + b</em></p>
+
+  </section>
+  <section>
+    <h3 id="example-1">Example 1</h3>
+<h4 id="linear-function">Linear Function</h4>
+
+  </section>
+  <section>
+    <p><em>y = m * x + b</em></p>
 
   </section>
   <section>
@@ -1939,7 +1922,7 @@ add2.(3) # =&gt; 5</code></pre>
     <h3 id="fahrenheit-degrees-from-celcius">Fahrenheit Degrees From Celcius</h3>
 <pre><code class="lang-ruby"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">INeedAClassNameForThis</span></span>
   <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">self</span>.<span class="hljs-title">fahrenheit</span><span class="hljs-params">(celcius)</span></span>
-    MyMath.linear(<span class="hljs-number">1.8</span>, celcius, <span class="hljs-number">32</span>) 
+    MyMath.linear(<span class="hljs-number">1.8</span>, celcius, <span class="hljs-number">32</span>)
   <span class="hljs-keyword">end</span>
 <span class="hljs-keyword">end</span>
 
@@ -1959,7 +1942,7 @@ INeedAClassNameForThis.fahrenheit(<span class="hljs-number">10</span>)</code></p
   <span class="hljs-keyword">end</span>
 <span class="hljs-keyword">end</span>
 
-to_fahrenheit = Linear.new(<span class="hljs-number">1.8</span>, <span class="hljs-number">32</span>) 
+to_fahrenheit = Linear.new(<span class="hljs-number">1.8</span>, <span class="hljs-number">32</span>)
 to_fahrenheit.call(<span class="hljs-number">10</span>)</code></pre>
 
   </section>
@@ -1975,12 +1958,89 @@ to_celcius.(<span class="hljs-number">50</span>) <span class="hljs-comment">#=&g
 
   </section>
   <section>
-    <h3 id="partial-application-for-managing-dependency-injection">Partial Application For Managing Dependency Injection</h3>
+    <h3 id="example-2">Example 2</h3>
+<h4 id="poor-s-man-strong-parameters">Poor&#39;s man Strong Parameters</h4>
 
   </section>
   <section>
-    <h3 id="problem">Problem</h3>
-<p>I want to know the repos main language count for given Github account</p>
+    <pre><code class="lang-ruby">params = {<span class="hljs-symbol">name:</span> <span class="hljs-string">"Joe"</span>, <span class="hljs-symbol">age:</span> <span class="hljs-string">"23"</span>, <span class="hljs-symbol">pwd:</span> <span class="hljs-string">"hacked_password"</span>}</code></pre>
+<pre><code class="lang-ruby">filter_hash.([<span class="hljs-symbol">:name</span>, <span class="hljs-symbol">:age</span>]).(params)
+<span class="hljs-comment"># =&gt; {name: "Joe", age: "23"}</span></code></pre>
+<pre><code class="lang-ruby">filter_hash = -&gt; keys, params {
+  Hash[keys.map { |key| [key, param[key]] }]
+}.curry</code></pre>
+
+  </section>
+  <section>
+    <pre><code class="lang-ruby">params = {<span class="hljs-symbol">name:</span> <span class="hljs-string">"Joe"</span>, <span class="hljs-symbol">age:</span> <span class="hljs-string">"23"</span>, <span class="hljs-symbol">pwd:</span> <span class="hljs-string">"hacked_password"</span>,
+          <span class="hljs-symbol">contact:</span> { <span class="hljs-symbol">address:</span> <span class="hljs-string">"2342 St-Denis"</span>,
+                     <span class="hljs-symbol">to_filter:</span> <span class="hljs-string">""</span>}}</code></pre>
+<pre><code>filter_hash.([:name, :age, :contact]).(params)
+
+hash_of.(name: -&gt; a {a}, 
+         age: -&gt; a {a}, 
+         contact: hash_of.(address: -&gt; a {a})).(params)</code></pre>
+
+  </section>
+  <section>
+    <pre><code class="lang-ruby">filter_hash = -&gt; keys, hash {
+  Hash[keys.map { |key| [key, hash[key]] }]
+}.curry</code></pre>
+
+  </section>
+  <section>
+    <pre><code class="lang-ruby">hash_of = -&gt; fields, hash { 
+  Hash[fields.map { |(key, fn)| [key, fn.(hash[key])] }] 
+}.curry</code></pre>
+
+  </section>
+  <section>
+    <h4 id="the-identity-function">The Identity Function</h4>
+<pre><code class="lang-ruby">same = -&gt; a { a }
+same.(<span class="hljs-number">2</span>) <span class="hljs-comment"># =&gt; 2</span></code></pre>
+
+  </section>
+  <section>
+    <pre><code class="lang-ruby">hash_of.(<span class="hljs-symbol">name:</span> -&gt; a {a}, 
+         <span class="hljs-symbol">age:</span> -&gt; a {a}, 
+         <span class="hljs-symbol">contact:</span> hash_of.(<span class="hljs-symbol">address:</span> -&gt; a {a}))</code></pre>
+
+  </section>
+  <section>
+    <pre><code class="lang-ruby">hash_of.(<span class="hljs-symbol">name:</span> same, 
+         <span class="hljs-symbol">age:</span> same, 
+         <span class="hljs-symbol">contact:</span> hash_of.(<span class="hljs-symbol">address:</span> same))</code></pre>
+
+  </section>
+  <section>
+    <pre><code class="lang-ruby">contact = hash_of.(<span class="hljs-symbol">address:</span> same)
+user = hash_of.(<span class="hljs-symbol">name:</span> same, <span class="hljs-symbol">age:</span> same,
+                <span class="hljs-symbol">contact:</span> hash_of.(contact))</code></pre>
+
+  </section>
+  <section>
+    <pre><code class="lang-ruby">array_of = -&gt; fn, value {
+  <span class="hljs-keyword">if</span> value.kind_of?(Array)
+    value.map(&amp;fn)
+  <span class="hljs-keyword">else</span>
+   []
+}.curry
+
+default = -&gt; default, a { a.<span class="hljs-keyword">nil</span>? ? default <span class="hljs-symbol">:</span> a  }.curry
+to_int = =&gt; a { a.to_i }</code></pre>
+
+  </section>
+  <section>
+    <pre><code class="lang-ruby">contact = hash_of.(<span class="hljs-symbol">address:</span> default.(<span class="hljs-string">"N/A"</span>)) 
+params = [{<span class="hljs-symbol">address:</span> <span class="hljs-string">"21 Jump Street"</span>, <span class="hljs-symbol">remove:</span> <span class="hljs-string">"me"</span> }, 
+          {}]
+array_of.(contact).(params)
+<span class="hljs-comment"># =&gt; [{address: "21 Jump Street"}, </span>
+<span class="hljs-comment">#     {address: "N/A"}]</span></code></pre>
+
+  </section>
+  <section>
+    <h3 id="partial-application-for-managing-dependency-injection">Partial Application For Managing Dependency Injection</h3>
 
   </section>
   <section>
@@ -1991,20 +2051,18 @@ to_celcius.(<span class="hljs-number">50</span>) <span class="hljs-comment">#=&g
     @client = github_client
   <span class="hljs-keyword">end</span>
 
-  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">call</span><span class="hljs-params">(user_name)</span></span>
-    repos = @client.repos(user_name)
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">call</span><span class="hljs-params">(account_name)</span></span>
+    repos = @client.repos(account_name)
     @logger.info(<span class="hljs-string">"REPOS = \n <span class="hljs-subst">#{repos}</span>"</span>)
-    repos.group_by { |a| a[<span class="hljs-string">"language"</span>] }
-         .map { |key, val| [key, val.count] }
-         .to_h
+    <span class="hljs-comment"># Do some stuff with the repos</span>
   <span class="hljs-keyword">end</span>
 <span class="hljs-keyword">end</span></code></pre>
 
   </section>
   <section>
     <pre><code class="lang-ruby"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">GithubClient</span></span>
-  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">repos</span><span class="hljs-params">(user_name)</span></span>
-    json = open(<span class="hljs-string">"https://api.github.com/users/<span class="hljs-subst">#{user_name}</span>/repos?per_page=100"</span>).read
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">repos</span><span class="hljs-params">(account_name)</span></span>
+    json = open(<span class="hljs-string">"https://api.github.com/users/<span class="hljs-subst">#{account_name}</span>/repos?per_page=100"</span>).read
     JSON.parse(json)
   <span class="hljs-keyword">end</span>
 <span class="hljs-keyword">end</span>
@@ -2018,26 +2076,24 @@ puts counter.call(<span class="hljs-string">"martinos"</span>)</code></pre>
   </section>
   <section>
     <h3 id="the-functional-way">The Functional Way</h3>
-<pre><code class="lang-ruby">language_count = -&gt; print, fetch_repo, user_name {
-  repos = fetch_repo.(user_name)
+<pre><code class="lang-ruby">language_count = -&gt; print, fetch_repo, account_name {
+  repos = fetch_repo.(account_name)
   print.(<span class="hljs-string">"REPOS = \n  <span class="hljs-subst">#{repos}</span>"</span>)
-  repos.group_by { |a| a[<span class="hljs-string">"language"</span>] }
-       .map { |key, val| [key, val.count] }
-       .to_h
+  <span class="hljs-comment"># do some stuff with the repos</span>
 }.curry</code></pre>
 
   </section>
   <section>
-    <pre><code class="lang-ruby">fetch_repo = -&gt; user_name { 
-  json = open(<span class="hljs-string">"https://api.github.com/users/<span class="hljs-subst">#{user_name}</span>/repos?per_page=100"</span>).read 
+    <pre><code class="lang-ruby">fetch_repo = -&gt; account_name {
+  json = open(<span class="hljs-string">"https://api.github.com/users/<span class="hljs-subst">#{account_name}</span>/repos?per_page=100"</span>).read
   JSON.parse(json)
 }
 
-printer = $stdout.method(<span class="hljs-symbol">:puts</span>)
-get_names = language_count.(printer).(fetch_repo)
+printer = -&gt; a { puts a }
+my_counter = language_count.(printer).(fetch_repo)
 
 <span class="hljs-comment"># Somewhere else in the code</span>
-get_names.(<span class="hljs-string">"martinosis"</span>)</code></pre>
+my_counter.(<span class="hljs-string">"martinosis"</span>)</code></pre>
 
   </section>
   <section>
@@ -2051,57 +2107,36 @@ printer = -&gt; a { logger.info(a) }</code></pre>
 
   </section>
   <section>
-    <h3 id="the-math">The Math</h3>
-<pre><code>f : a -&gt; b
-g : b -&gt; c
-h : c -&gt; d
-
-u(x) = g(f(x))
-u = g * f
-
-v(x) = h(u(x))
-v(x) = h(g(f(x)))
-v = h * (g * f)
-
-w(x) = h(g(x))
-w = h * g
-
-v(x) = w(f(x))
-v(x) = (h * g) * h</code></pre>
-
-  </section>
-  <section>
-    <h2 id="function-composition-is-associative">Function Composition Is Associative</h2>
-
-  </section>
-  <section>
-    <h3 id="creating-composition-function">Creating Composition Function</h3>
-<pre><code class="lang-ruby"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Proc</span></span>
-  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">after</span><span class="hljs-params">(fn)</span></span>
-    -&gt; a { <span class="hljs-keyword">self</span>.(fn.(a)) }
-  <span class="hljs-keyword">end</span>
+    <p>In programming it&#39;s very frequent to do a calculation, take the result and pass it to another method or a function.</p>
+<pre><code class="lang-ruby"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">user_is_major</span><span class="hljs-params">(email)</span></span>
+  user = User.find_by(<span class="hljs-symbol">email:</span> email)
+  age = Time.now - user.birthdate
+  age &gt;= <span class="hljs-number">18</span>.years
 <span class="hljs-keyword">end</span></code></pre>
 
   </section>
   <section>
-    <h3 id="example">Example</h3>
-<pre><code class="lang-ruby"><span class="hljs-comment"># String -&gt; String</span>
-lower = -&gt; a { a.downcase }
+    <pre><code class="lang-ruby">user_from_email = -&gt; e { User.find_by(<span class="hljs-symbol">email:</span> e) }
+user_age = -&gt; user { Time.now - user.birthdate }
+is_major = -&gt; age { age &gt;= <span class="hljs-number">18</span>.years }
 
-<span class="hljs-comment"># Pattern -&gt; String -&gt; String</span>
-delete = -&gt; pattern, str { str.gsub(pattern, <span class="hljs-string">""</span>) }.curry
+is_user_major = -&gt; email { 
+  is_major.(user_age.(user_from_email.(email)))
+}.curry
 
-<span class="hljs-comment"># String -&gt; String</span>
-remove_a = delete.(<span class="hljs-string">"a"</span>).after(lower)
-remove_a.(<span class="hljs-string">"NOA"</span>) <span class="hljs-comment"># =&gt; "no"</span></code></pre>
+is_user_major.(<span class="hljs-string">"joebloe@acme.com"</span>)</code></pre>
 
   </section>
   <section>
-    <h3 id="the-operator">The &gt;&gt;~ operator</h3>
-<p>In Elm and F# there is the <code>&gt;&gt;</code> operator, which combines functions in the reverse order.</p>
+    <h4 id="function-composition-is-associative">Function Composition Is Associative</h4>
+
+  </section>
+  <section>
+    <h4 id="the-operator">The &gt;&gt;~ operator</h4>
+<p>Also know as <code>&gt;&gt;</code> in F# and Elm </p>
 <pre><code class="lang-ruby"><span class="hljs-keyword">require</span> <span class="hljs-string">'superators19'</span>
 
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Object</span></span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Proc</span></span>
   superator <span class="hljs-string">"&gt;&gt;~"</span> <span class="hljs-keyword">do</span> |fn|
     fn.(<span class="hljs-keyword">self</span>)
   <span class="hljs-keyword">end</span>
@@ -2110,60 +2145,22 @@ remove_a.(<span class="hljs-string">"NOA"</span>) <span class="hljs-comment"># =
   </section>
   <section>
     <h3 id="function-composition-decouples-code">Function Composition decouples code</h3>
-<pre><code>def upcase(string)
-  string.upcase
-end
+<pre><code class="lang-ruby">is_user_major = -&gt; email { is_major.(user_age.(user_from_email.(email)))}
 
-def reverse(string)
-  string.reverse
-end
-
-def upcase_and_reverse(string)
-  a = upcase(string)
-  reverse(a)
-end</code></pre>
+is_user_major = user_from_email <span class="hljs-meta">&gt;&gt;</span>~ user_age &gt;&gt;~ is_major
+is_user_major.(<span class="hljs-string">"joebloe@acme.com"</span>)</code></pre>
 
   </section>
   <section>
-    <h3 id="example">Example</h3>
-<pre><code class="lang-ruby"><span class="hljs-comment"># String -&gt; String</span>
-remove_a = lower <span class="hljs-meta">&gt;&gt;</span>~ delete.(<span class="hljs-string">"a"</span>)</code></pre>
-<p>Is equivalent to</p>
-<pre><code class="lang-ruby"><span class="hljs-comment"># String -&gt; String</span>
-remove_a = delete.(<span class="hljs-string">"a"</span>).after(lower)</code></pre>
+    <p><img src="images/composition.png" alt="alt text" title="Logo Title Text 1"></p>
 
   </section>
   <section>
-    <h3 id="example-the-oo-way-">Example (The OO Way)</h3>
-<pre><code class="lang-ruby">users = User.all
-zip_codes = users.map { |a| a.id }
-                 .map { |user_id| Address.find_by(<span class="hljs-symbol">id:</span> user_id} }
-                 .map { |addr| addr.zip_code }</code></pre>
+    <h2 id="the-christmas-tree-operator-">The Christmas Tree Operator (&gt;&gt;+)</h2>
 
   </section>
   <section>
-    <h3 id="the-fp-way">The FP Way</h3>
-<pre><code class="lang-ruby"><span class="hljs-comment"># (a -&gt; b) -&gt; List a -&gt; List b</span>
-map = -&gt; fn, a { a.map(&amp;<span class="hljs-symbol">:fn</span>) }
-
-<span class="hljs-comment"># Model -&gt; Symbol -&gt; a</span>
-find_in = -&gt; model, attr, value { model.find_by(attr =&gt; value) }
-
-<span class="hljs-comment"># a -&gt; b -&gt; c</span>
-get = -&gt; a, method { a.send(<span class="hljs-symbol">:method</span>) }</code></pre>
-<pre><code class="lang-ruby"><span class="hljs-comment"># User -&gt; String</span>
-zip_code_from_user = get.(<span class="hljs-symbol">:id</span>) <span class="hljs-meta">&gt;&gt;</span>~
-                     find_in.(Address).(<span class="hljs-symbol">:id</span>) &gt;&gt;~
-                     get.(<span class="hljs-symbol">:zip_code</span>)
-repo_names = map.(zip_code_from_user).(User.all)</code></pre>
-
-  </section>
-  <section>
-    <h1 id="the-christmas-tree-operator-">The Christmas Tree Operator (&gt;&gt;+)</h1>
-
-  </section>
-  <section>
-    <h1 id="mostly-known-as-the-pipe-operator-">Mostly Known As The Pipe Operator (|&gt;)</h1>
+    <h2 id="mostly-known-as-the-pipe-operator-">Mostly Known As The Pipe Operator (|&gt;)</h2>
 
   </section>
   <section>
@@ -2173,7 +2170,10 @@ repo_names = map.(zip_code_from_user).(User.all)</code></pre>
     fn.(<span class="hljs-keyword">self</span>)
   <span class="hljs-keyword">end</span>
 <span class="hljs-keyword">end</span></code></pre>
-<p>It applies the left and side value to the last parameter of the right side.</p>
+
+  </section>
+  <section>
+    <p>It applies the left and side value to the last parameter of the right side.</p>
 
   </section>
   <section>
@@ -2181,8 +2181,14 @@ repo_names = map.(zip_code_from_user).(User.all)</code></pre>
 <pre><code class="lang-ruby">upcase = -&gt; a { a.upcase }
 reverse = -&gt; a { a.reverse }
 
-<span class="hljs-string">"this is a test"</span> <span class="hljs-meta">&gt;&gt;</span>+ upcase &gt;&gt;+ reverse 
-<span class="hljs-comment"># =&gt; "TSET A SI SIHT"</span></code></pre>
+<span class="hljs-string">"this is a test"</span> <span class="hljs-meta">&gt;&gt;</span>+ upcase &gt;&gt;+ reverse
+<span class="hljs-comment"># =&gt; "TSET A SI SIHT"</span>
+
+reverse.(upcase.(<span class="hljs-string">"this is a test"</span>))</code></pre>
+
+  </section>
+  <section>
+    <h3 id="this-pipe-operator-is-not-associative">This pipe operator is not associative</h3>
 
   </section>
   <section>
@@ -2192,9 +2198,9 @@ reverse = -&gt; a { a.reverse }
   <section>
     <h3 id="references">References</h3>
 <h4 id="learning">Learning</h4>
-<pre><code>```
-
-#### Talks</code></pre>
+<p><code>ruby</code></p>
+<h4 id="talks">Talks</h4>
+<p>```ruby</p>
 
   </section>
 
