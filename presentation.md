@@ -100,7 +100,7 @@ add.(10).(1).(5) # => 16
 ```
 ---
 
-Defining your curried lambda this way can be tedious. Ruby offers a solution for that.
+Defining your lambdas this way can be tedious. Ruby offers a solution for that.
 
 Anyone ?
 
@@ -143,7 +143,7 @@ class MyMath
 end
 ```
 ---
-### Fahrenheit Degrees From Celcius
+### Celcius to Farenheit
 
 ```ruby
 class INeedAClassNameForThis
@@ -197,14 +197,14 @@ params = {name: "Joe", age: "23", pwd: "hacked_password"}
 ```
 
 ```ruby
-filter_hash.([:name, :age]).(params)
-# => {name: "Joe", age: "23"}
-```
-
-```ruby
 filter_hash = -> keys, params {
   Hash[keys.map { |key| [key, param[key]] }]
 }.curry
+```
+
+```ruby
+filter_hash.([:name, :age]).(params)
+# => {name: "Joe", age: "23"}
 ```
 
 ----
@@ -215,27 +215,22 @@ params = {name: "Joe", age: "23", pwd: "hacked_password",
                      to_filter: ""}}
 ```
 
-```
+```ruby
 filter_hash.([:name, :age, :contact]).(params)
+# => {name: "Joe", age: "23",
+#     contact: { address: "2342 St-Denis",
+#                to_filter: ""}}
+```
+---
 
+```ruby
 hash_of.(name: -> a {a}, 
          age: -> a {a}, 
          contact: hash_of.(address: -> a {a})).(params)
 ```
----
-
-```ruby
-filter_hash = -> keys, hash {
-  Hash[keys.map { |key| [key, hash[key]] }]
-}.curry
 ```
-
----
-
-```ruby
-hash_of = -> fields, hash { 
-  Hash[fields.map { |(key, fn)| [key, fn.(hash[key])] }] 
-}.curry
+# => {name: "Joe", age: "23",
+#     contact: { address: "2342 St-Denis" }
 ```
 ---
 
@@ -280,7 +275,6 @@ array_of = -> fn, value {
 }.curry
 
 default = -> default, a { a.nil? ? default : a  }.curry
-to_int = => a { a.to_i }
 ```
 ---
 ```ruby
@@ -293,6 +287,21 @@ array_of.(contact).(params)
 ```
 ---
 
+```ruby
+params.permit(:name, 
+              {:emails => []}, 
+              :friends => [ :name, { :family => [ :name ], 
+                                     :hobbies => [] }])
+```
+---
+```ruby
+hash_of.({ name: same, 
+           emails: array_of.(same),
+           friends: array_of.({ name: same, 
+                                family: hash_of.(name: same)
+                                hobbies: array_of.(same)})})
+```
+---
 
 ### Partial Application For Managing Dependency Injection
 
@@ -329,6 +338,7 @@ client = GithubClient.new
 counter = RepoLanguageCounter.new(logger, client)
 
 puts counter.call("martinos")
+# => {"ruby" => 55, "cobol" => 70, "fortran" => 24}
 ```
 ---
 
@@ -356,7 +366,7 @@ my_counter.("martinosis")
 ```
 ---
 ```ruby
-printer = -> a { a }
+printer = -> a { a } # /dev/null
 # or
 printer = -> a { logger.info(a) }
 ```
@@ -375,7 +385,7 @@ end
 ```
 ---
 ```ruby
-user_from_email = -> e { User.find_by(email: e) }
+user_from_email = -> email { User.find_by(email: email) }
 user_age = -> user { Time.now - user.birthdate }
 is_major = -> age { age >= 18.years }
 
@@ -394,7 +404,7 @@ is_user_major.("joebloe@acme.com")
 
 #### The >>~ operator
 
-Also know as `>>` in F# and Elm 
+Aka `>>` in F# and Elm 
 
 ```ruby
 require 'superators19'
@@ -422,10 +432,7 @@ is_user_major.("joebloe@acme.com")
 
 
 ## The Christmas Tree Operator (>>+)
-
----
-
-## Mostly Known As The Pipe Operator (|>)
+Aka The Pipe Operator (|>)
 
 ---
 
@@ -441,7 +448,7 @@ end
 
 ---
 
-It applies the left and side value to the last parameter of the right side.
+It applies the left and side value to the first parameter of the right side.
 
 ---
 
@@ -451,26 +458,30 @@ It applies the left and side value to the last parameter of the right side.
 upcase = -> a { a.upcase }
 reverse = -> a { a.reverse }
 
-"this is a test" >>+ upcase >>+ reverse
-# => "TSET A SI SIHT"
+"desserts" >>+ upcase >>+ reverse
+# => "stressed"
 
 reverse.(upcase.("this is a test"))
 ```
 ---
+
 ### This pipe operator is not associative
+
+---
+
+## Live Example
+
+---
+
+![alt text](images/recursive_composition.png "Logo Title Text 1")
+
 ---
 
 ### Conclusion
 
+- Partial application allows us to apply parameters to a function at different points in time. 
+- Function composition makes program more modular and reusable
+
 ---
 
-### References
-
-#### Learning
-
-```ruby
-```
-
-#### Talks
-
-```ruby
+### Questions?

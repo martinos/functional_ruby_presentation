@@ -48,3 +48,6 @@ end
 
 # friend = hash_of.({name: scalar, family: array_of.(hash_of.({name: scalar})), hobbies: array_of.(scalar)})
 # user = hash_of.({name: scalar, email: array_of.(scalar), friends: array_of.(friend)})
+#
+#
+#

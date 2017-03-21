@@ -6,9 +6,10 @@ module RemoteHelpers
   @@retry_fn = -> fn, a {
     begin
       fn.(a)
-    rescue
-      sleep(1)
+    rescue Exception => e
+      puts e
       puts "RETRYING"
+      sleep(1)
       @@retry_fn.(fn).(a)
     end
   }.curry
@@ -17,21 +18,14 @@ module RemoteHelpers
     to_save
   }.curry
   @@play = -> filename, _params { YAML.load(File.read(filename)) }.curry
-  # (Number -> String -> Bool) -> String -> (a -> b) -> b
   @@is_expired = -> sec, a { ! File.exist?(a)  || (Time.now - File.mtime(a)) > sec  }.curry
-  @@cache  = -> filename, duration,  fn, param {
+  @@cache  = -> duration, filename, fn, param {
     if @@is_expired.(duration).(filename) 
+      puts "caching"
       @@record.(filename).(fn.(param))
     else
       puts "reading from cache"
       @@play.(filename).(nil)
     end
   }.curry
-  
-  # (String -> String) -> String -> ( a -> b ) -> a -> b
-  @@time = -> print, msg, fn, a {
-    start_time = Time.now 
-    res = fn.(a)
-    print.("Time duration for #{msg} =  #{Time.now - start_time}")
-    res}.curry
 end

@@ -28,7 +28,6 @@ module Utils
     end
   }.curry
   @@record = -> filename, to_save {
-    binding.pry
     File.open(filename, "w+") { |a| a << to_save.to_yaml }
     to_save
   }.curry

@@ -1,0 +1,36 @@
+---
+:status: '201'
+:header:
+  server:
+  - Cowboy
+  date:
+  - Tue, 14 Mar 2017 13:50:34 GMT
+  connection:
+  - close
+  x-frame-options:
+  - SAMEORIGIN
+  x-xss-protection:
+  - 1; mode=block
+  x-content-type-options:
+  - nosniff
+  content-type:
+  - application/json; charset=utf-8
+  etag:
+  - W/"ed8b3deb18735f3080fe800dfe166f0a"
+  cache-control:
+  - max-age=0, private, must-revalidate
+  set-cookie:
+  - request_method=POST; path=/; secure
+  - _btrfly-ror_session=NHpXVHJ1UnRTc2VXcFVMWDBWbkZFOTUrVVZBNmdnZG9SQXcvMXE0ZTlydFVFcVVuVVluNVk0cjRBL0VBWUVEZ3JTMjIzaHRyTGtOdVR1bWVBQW1KcVh4LzN3dmQrdkl5cFNvVUptazIyMTR3ckpxbjJCTDk4d0FzdURSYlhaS3p0Vk9kWXRCVUh4bVNGZUxkQVIreWRmVjdCa3pOSGROOEhDTitkcGlKbjZzPS0tZWZod1ZOaHFDSlZZdVY3ZDhFME1EQT09--d1c282cfc550c4e63aab4036e2eaa3236eb958ce;
+    path=/; secure; HttpOnly
+  x-request-id:
+  - ca967e6d-018c-4222-a3e9-93f09485b93b
+  x-runtime:
+  - '0.183800'
+  strict-transport-security:
+  - max-age=31536000
+  transfer-encoding:
+  - chunked
+  via:
+  - 1.1 vegur
+:body: '{"user":{"id":570,"authentication_token":"i2eZReNEyM_jGKJ3BzeS_wsvsgR-kW23Dw","email":"chabotm@gmail.com","first_name":"Martin","last_name":"Chabot","gender":"Male","location":"","occupation":"J''yg","greetings":"","age_is_public":true,"birthday":"1971-01-28","media":{"small":"/avatars/thumb/missing.png","original":"/avatars/original/missing.png","content_type":""},"confirmed_at":"2016-09-06T15:53:59.095Z","confirmation_sent_at":"2016-08-23T19:04:14.967Z"}}'
