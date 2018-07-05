@@ -5,6 +5,10 @@ output: slideshow.html
 --
 # Functional Ruby
 --
+## By 
+### Martin Chabot
+### Twitter : @martinosis
+--
 ## In Ruby Everything Is
 --
 ## An Object
@@ -224,6 +228,12 @@ filter_hash.([:name, :age, :contact]).(params)
 ---
 
 ```ruby
+hash_of = -> fields , hash { 
+  Hash[fields.map { |(key, fn)| [key, fn.(hash[key])] }] 
+}.curry
+```
+
+```ruby
 hash_of.(name: -> a {a}, 
          age: -> a {a}, 
          contact: hash_of.(address: -> a {a})).(params)
@@ -411,7 +421,7 @@ require 'superators19'
 
 class Proc
   superator ">>~" do |fn|
-    fn.(self)
+    -> a { fn.(self.(a)) }
   end
 end
 ```

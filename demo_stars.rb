@@ -17,14 +17,13 @@ $stdout.sync = true
 # url 
 # https://api.github.com/users/martinos/starred
 #
-server = HttpFp::NetHttp.server >>+ (timer.("Request") >>~ retry_fn >>~ cache.(10).("stars.yml"))
-json_server = with_host.("https://api.github.com") >>~ server >>~ json_resp
+server = timer.("Request Time").(cache.(10).("mtlrb.yml").(retry_fn.(HttpFp::NetHttp.rack(Rails.application))))
+json_server =  server >>~ json_resp
 
-get_stars = -> account_name {
-  verb.(:get) >>~ 
-    with_path.("/users/#{account_name}/starred") >>~ 
-    json_server >>~ 
-    array_of.(hash_of.({"name" => same, "language" => same}))
-} 
-
-get_stars.("martinos") >>~ debug.("result") >>+ run
+get_stars = -> acccount {
+run.(
+(verb.(:get) >>~ 
+        with_path.("/users/#{account}/starred") >>~ 
+        with_host.("https://api.github.com") >>~ 
+        json_server >>~ 
+        array_of.(hash_of.("name" => same, "language" => same)) >>~ d))}
